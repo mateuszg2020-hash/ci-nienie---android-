@@ -24,6 +24,9 @@ jobs:
       - name: Unpack ATMOS project
         run: unzip -o ATMOS_Android_Project.zip -d project
 
+      - name: Inspect ATMOS source
+        run: sed -n '1,260p' project/app/src/main/java/pl/atmos/weather/MainActivity.kt
+
       - name: Build ATMOS APK
         run: cd project && gradle assembleDebug
 
