@@ -27,6 +27,42 @@ jobs:
       - name: Apply ATMOS premium app source
         run: cp app/src/main/java/pl/atmos/weather/MainActivity.kt project/app/src/main/java/pl/atmos/weather/MainActivity.kt
 
+
+      - name: Set ATMOS Pogoda branding and weather icon
+        run: |
+          mkdir -p project/app/src/main/res/mipmap-anydpi project/app/src/main/res/mipmap-anydpi-v26 project/app/src/main/res/drawable project/app/src/main/res/values
+          cat > project/app/src/main/res/values/atmos_icon_colors.xml <<'EOF'
+          <resources><color name="atmos_icon_bg">#081729</color></resources>
+          EOF
+          cat > project/app/src/main/res/drawable/atmos_icon_fg.xml <<'EOF'
+          <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+            <path android:fillColor="#FFC857" android:pathData="M72,17a19,19 0,1 0,0.1 0z"/>
+            <path android:fillColor="#FFF3D6" android:pathData="M31,79c-10,0 -18,-8 -18,-18s8,-18 18,-18c4,-13 16,-21 29,-18 10,2 17,10 19,20 10,0 18,8 18,18s-8,16 -18,16z"/>
+            <path android:fillColor="#DCEEFF" android:pathData="M31,78h48c8,0 14,-6 14,-14s-6,-14 -14,-14h-5l-1,-5c-2,-9 -10,-15 -20,-15 -11,0 -20,8 -21,19l-1,5 -5,-1c-8,0 -14,6 -14,13s6,12 14,12z"/>
+          </vector>
+          EOF
+          cat > project/app/src/main/res/mipmap-anydpi/ic_launcher.xml <<'EOF'
+          <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="48dp" android:height="48dp" android:viewportWidth="108" android:viewportHeight="108">
+            <path android:fillColor="#081729" android:pathData="M0,0h108v108h-108z"/>
+            <path android:fillColor="#FFC857" android:pathData="M72,17a19,19 0,1 0,0.1 0z"/>
+            <path android:fillColor="#DCEEFF" android:pathData="M31,78h48c8,0 14,-6 14,-14s-6,-14 -14,-14h-5l-1,-5c-2,-9 -10,-15 -20,-15 -11,0 -20,8 -21,19l-1,5 -5,-1c-8,0 -14,6 -14,13s6,12 14,12z"/>
+          </vector>
+          EOF
+          cp project/app/src/main/res/mipmap-anydpi/ic_launcher.xml project/app/src/main/res/mipmap-anydpi/ic_launcher_round.xml
+          for name in ic_launcher ic_launcher_round; do
+            cat > project/app/src/main/res/mipmap-anydpi-v26/$name.xml <<'EOF'
+          <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+            <background android:drawable="@color/atmos_icon_bg"/>
+            <foreground android:drawable="@drawable/atmos_icon_fg"/>
+          </adaptive-icon>
+          EOF
+          done
+          if [ -f project/app/src/main/res/values/strings.xml ]; then
+            sed -i 's#<string name="app_name">[^<]*</string>#<string name="app_name">ATMOS pogoda</string>#' project/app/src/main/res/values/strings.xml
+          fi
+          sed -i 's#android:label="[^"]*"#android:label="ATMOS pogoda"#' project/app/src/main/AndroidManifest.xml
+          grep -n 'android:label\|android:icon' project/app/src/main/AndroidManifest.xml
+
       - name: Build ATMOS APK
         run: cd project && gradle assembleDebug
 
