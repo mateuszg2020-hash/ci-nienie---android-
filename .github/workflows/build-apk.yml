@@ -22,8 +22,27 @@ jobs:
           gradle-version: "8.9"
 
       - name: Unpack project
+        run: unzip -o CisnienieAndroid_GitHub.zip -d project
+
+      - name: Fix Java and Kotlin versions
         run: |
-          unzip -o CisnienieAndroid_GitHub.zip -d project
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("project/app/build.gradle.kts")
+          s = p.read_text()
+          if "sourceCompatibility" not in s:
+              i = s.rfind("\n}")
+              s = s[:i] + """
+              compileOptions {
+                  sourceCompatibility = JavaVersion.VERSION_17
+                  targetCompatibility = JavaVersion.VERSION_17
+              }
+              kotlinOptions {
+                  jvmTarget = "17"
+              }
+          """ + s[i:]
+          p.write_text(s)
+          PY
 
       - name: Build APK
         run: cd project && gradle assembleDebug
@@ -32,4 +51,5 @@ jobs:
         with:
           name: Cisnienie-APK
           path: project/app/build/outputs/apk/debug/app-debug.apk
+          
           
