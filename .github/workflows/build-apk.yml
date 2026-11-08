@@ -1,10 +1,9 @@
-
-name: Build ATMOS APK
+name: Build ATMOS Premium APK
 
 on:
   workflow_dispatch:
   push:
-    branches: ["main"]
+    branches: ["atmos-premium"]
 
 jobs:
   build:
@@ -21,14 +20,19 @@ jobs:
         with:
           gradle-version: "8.9"
 
-      - name: Unpack ATMOS project
+      - name: Unpack Android project
         run: unzip -o ATMOS_Android_Project.zip -d project
 
-      - name: Build ATMOS APK
+      - name: Apply ATMOS premium app
+        run: |
+          mkdir -p project/app/src/main
+          cp -R app/src/main/. project/app/src/main/
+
+      - name: Build APK
         run: cd project && gradle assembleDebug
 
       - uses: actions/upload-artifact@v4
         with:
-          name: ATMOS-APK
+          name: ATMOS-Premium-APK
           path: project/app/build/outputs/apk/debug/app-debug.apk
-          
+          if-no-files-found: error
