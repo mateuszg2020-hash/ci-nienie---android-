@@ -1,5 +1,5 @@
 
-name: Build Android APK
+name: Build ATMOS APK
 
 on:
   workflow_dispatch:
@@ -21,35 +21,14 @@ jobs:
         with:
           gradle-version: "8.9"
 
-      - name: Unpack project
-        run: unzip -o CisnienieAndroid_GitHub.zip -d project
+      - name: Unpack ATMOS project
+        run: unzip -o ATMOS_Android_Project.zip -d project
 
-      - name: Fix Java and Kotlin versions
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p = Path("project/app/build.gradle.kts")
-          s = p.read_text()
-          if "sourceCompatibility" not in s:
-              i = s.rfind("\n}")
-              s = s[:i] + """
-              compileOptions {
-                  sourceCompatibility = JavaVersion.VERSION_17
-                  targetCompatibility = JavaVersion.VERSION_17
-              }
-              kotlinOptions {
-                  jvmTarget = "17"
-              }
-          """ + s[i:]
-          p.write_text(s)
-          PY
-
-      - name: Build APK
+      - name: Build ATMOS APK
         run: cd project && gradle assembleDebug
 
       - uses: actions/upload-artifact@v4
         with:
-          name: Cisnienie-APK
+          name: ATMOS-APK
           path: project/app/build/outputs/apk/debug/app-debug.apk
-          
           
