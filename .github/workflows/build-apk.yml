@@ -75,3 +75,5 @@ jobs:
 # Rebuild after restoring ATMOS city picker and weather startup.
 
 # Rebuild with Leaflet wind-flow pane fix.
+
+# Rebuild ATMOS after long-range forecast data correction.
