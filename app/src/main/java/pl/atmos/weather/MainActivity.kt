@@ -1,0 +1,90 @@
+package pl.atmos.weather
+
+import android.app.Activity
+import android.os.Bundle
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
+
+class MainActivity : Activity() {
+    private lateinit var web: WebView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        web = WebView(this)
+        web.settings.javaScriptEnabled = true
+        web.settings.domStorageEnabled = true
+        web.settings.loadWithOverviewMode = true
+        web.settings.useWideViewPort = true
+        web.webViewClient = WebViewClient()
+        web.webChromeClient = WebChromeClient()
+        setContentView(web)
+        web.loadDataWithBaseURL("https://atmos.app/", PAGE, "text/html", "UTF-8", null)
+    }
+
+    override fun onBackPressed() {
+        if (web.canGoBack()) web.goBack() else super.onBackPressed()
+    }
+
+    companion object {
+        private val PAGE = """
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>ATMOS</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{--bg:#07111f;--panel:#101f31;--panel2:#14263a;--line:#243950;--text:#f1f6fc;--muted:#91a7bd;--blue:#62c5ff;--cyan:#51e0d0;--orange:#ffb45f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+header{padding:20px 20px 12px;display:flex;align-items:center;justify-content:space-between} .logo{font-size:25px;font-weight:850;letter-spacing:3px}.logo span{color:var(--blue)}.place{font-size:13px;color:var(--muted);margin-top:3px}.pill{border:1px solid var(--line);border-radius:20px;padding:8px 12px;color:var(--blue);font-size:12px}
+nav{display:flex;gap:7px;padding:0 16px 14px;overflow:auto}nav button{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:14px;padding:11px 15px;font-weight:650;white-space:nowrap}nav button.active{background:#173b56;color:#fff;border-color:#28658c}
+main{padding:0 16px 28px}.hero{background:linear-gradient(135deg,#15334b,#10243a 65%,#12283b);border:1px solid #244763;border-radius:24px;padding:20px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-55px;top:-65px;background:#4ebdff12}.eyebrow{color:#9ab4ca;font-size:12px;letter-spacing:1.4px;text-transform:uppercase}.temp{font-size:68px;font-weight:300;letter-spacing:-4px;margin:8px 0 0}.desc{font-size:16px;color:#d3e4f2}.feels{font-size:13px;color:#9eb5c9;margin-top:7px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.tile{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;min-height:88px}.tile .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}.tile .v{font-size:22px;font-weight:650;margin-top:8px}.tile .s{font-size:11px;color:var(--muted);margin-top:3px}.section{font-size:16px;font-weight:750;margin:22px 2px 10px}.hours{display:flex;gap:9px;overflow:auto;padding-bottom:5px}.hour{min-width:70px;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:12px 8px;text-align:center}.hour b{display:block;font-size:17px;margin:7px 0}.hour small{color:var(--muted)}.screen{display:none}.screen.active{display:block}.mapwrap{height:55vh;min-height:350px;border-radius:20px;overflow:hidden;border:1px solid var(--line);position:relative}#map{height:100%;width:100%;background:#0b1827}.mapnote{font-size:12px;color:var(--muted);line-height:1.5;margin:10px 3px}.controls{background:var(--panel);border:1px solid var(--line);padding:14px;border-radius:17px;margin-top:11px}.controlrow{display:flex;align-items:center;justify-content:space-between;gap:10px}.controlrow strong{font-size:14px}.controlrow span{font-size:12px;color:var(--blue)}input[type=range]{width:100%;accent-color:#5cc5ff;margin:14px 0 5px}.btn{border:1px solid #2b5b7b;background:#15364e;color:#eaf7ff;border-radius:12px;padding:10px 14px;font-weight:650}.windstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.windstats .tile{padding:12px;min-height:70px}.windstats .v{font-size:18px}.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin:10px 4px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;background:#56d8ca}.error{color:#ffc078;font-size:12px;margin-top:8px}
+</style></head><body>
+<header><div><div class="logo">ATM<span>O</span>S</div><div class="place">POGODA • RADAR • WIATR</div></div><div class="pill" id="updated">ŁADOWANIE</div></header>
+<nav><button class="active" data-tab="today">Dzisiaj</button><button data-tab="radar">Radar</button><button data-tab="wind">Wiatr</button></nav>
+<main>
+<section id="today" class="screen active">
+<div class="hero"><div class="eyebrow" id="city">GOSTYNIN • TERAZ</div><div class="temp" id="temp">--°</div><div class="desc" id="condition">Pobieram pogodę…</div><div class="feels" id="feels">Odczuwalna --°</div></div>
+<div class="grid">
+<div class="tile"><div class="k">Wiatr</div><div class="v" id="windval">-- km/h</div><div class="s" id="winddir">Kierunek --</div></div>
+<div class="tile"><div class="k">Porywy</div><div class="v" id="gust">-- km/h</div><div class="s">Maksymalny podmuch</div></div>
+<div class="tile"><div class="k">Opady</div><div class="v" id="rain">-- mm</div><div class="s">Godzinowo</div></div>
+<div class="tile"><div class="k">Wilgotność</div><div class="v" id="humidity">--%</div><div class="s">Względna</div></div>
+<div class="tile"><div class="k">Ciśnienie</div><div class="v" id="pressure">-- hPa</div><div class="s">Na poziomie morza</div></div>
+<div class="tile"><div class="k">Indeks UV</div><div class="v" id="uv">--</div><div class="s">Bieżąca wartość</div></div>
+</div>
+<div class="section">Najbliższe godziny</div><div class="hours" id="hours"></div>
+</section>
+<section id="radar" class="screen">
+<div class="section">Radar opadów</div><div class="mapwrap"><div id="map"></div></div>
+<div class="controls"><div class="controlrow"><strong id="radarTime">Historia opadów</strong><button class="btn" id="playRadar">▶ Odtwarzaj</button></div><input id="radarRange" type="range" min="0" max="0" value="0"><div class="controlrow"><span id="radarOld">Starsze</span><span id="radarNew">Nowsze</span></div></div>
+<div class="mapnote">Klatki pokazują zarejestrowane opady z ostatnich godzin. To radar obserwacyjny, nie prognoza przemieszczania się deszczu.</div>
+</section>
+<section id="wind" class="screen">
+<div class="section">Mapa przepływu wiatru</div><div class="mapwrap"><div id="windmap"></div></div>
+<div class="windstats"><div class="tile"><div class="k">Wiatr</div><div class="v" id="wSpeed">--</div></div><div class="tile"><div class="k">Porywy</div><div class="v" id="wGust">--</div></div><div class="tile"><div class="k">Kierunek</div><div class="v" id="wDir">--</div></div></div>
+<div class="controls"><div class="controlrow"><strong id="windTime">Prognoza godzinowa</strong><span>Open-Meteo</span></div><input id="windRange" type="range" min="0" max="47" value="0"><div class="controlrow"><span>Teraz</span><span>+48 h</span></div></div>
+<div class="mapnote">Animowane smugi pokazują kierunek przepływu na podstawie prognozy wiatru dla Gostynina. Wartości prędkości i porywów zmieniają się wraz z wybraną godziną.</div>
+</section>
+</main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const LAT=52.4297,LON=19.4619;let weather=null,radarFrames=[],radarLayer=null,radarMap=null,windMap=null,playing=false,playTimer=null,particles=[],windCanvas=null,windCtx=null,windAnim=null;
+const $=id=>document.getElementById(id);
+function direction(d){const a=['N','NE','E','SE','S','SW','W','NW'];return a[Math.round(d/45)%8]}
+function showTab(tab){document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===tab));if(tab==='radar')setTimeout(initRadar,150);if(tab==='wind')setTimeout(initWind,150)}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+async function loadWeather(){try{const u='https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON+'&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,pressure_msl,wind_speed_10m,wind_direction_10m,wind_gusts_10m,uv_index&hourly=temperature_2m,precipitation_probability,wind_speed_10m,wind_direction_10m,wind_gusts_10m&forecast_days=3&timezone=Europe%2FWarsaw';const r=await fetch(u);weather=await r.json();const c=weather.current;$('temp').textContent=Math.round(c.temperature_2m)+'°';$('condition').textContent=c.is_day?'Warunki w ciągu dnia':'Warunki nocne';$('feels').textContent='Odczuwalna '+Math.round(c.apparent_temperature)+'°';$('windval').textContent=Math.round(c.wind_speed_10m)+' km/h';$('winddir').textContent=direction(c.wind_direction_10m)+' • '+c.wind_direction_10m+'°';$('gust').textContent=Math.round(c.wind_gusts_10m)+' km/h';$('rain').textContent=Number(c.precipitation).toFixed(1)+' mm';$('humidity').textContent=c.relative_humidity_2m+'%';$('pressure').textContent=Math.round(c.pressure_msl)+' hPa';$('uv').textContent=c.is_day?Number(c.uv_index).toFixed(1):'0';$('updated').textContent='AKTUALNE';$('hours').innerHTML='';let now=weather.hourly.time.indexOf(c.time.slice(0,13));if(now<0)now=0;for(let i=now;i<Math.min(now+18,weather.hourly.time.length);i++){const d=new Date(weather.hourly.time[i]);const el=document.createElement('div');el.className='hour';el.innerHTML='<small>'+d.toLocaleTimeString('pl-PL',{hour:'2-digit',minute:'2-digit'})+'</small><b>'+Math.round(weather.hourly.temperature_2m[i])+'°</b><small>Wiatr '+Math.round(weather.hourly.wind_speed_10m[i])+'</small>'; $('hours').appendChild(el)}$('windRange').max=Math.min(47,weather.hourly.time.length-now-1);$('windRange').oninput=()=>updateWind(Number($('windRange').value),now);updateWind(0,now)}catch(e){$('condition').textContent='Nie udało się pobrać danych. Sprawdź połączenie.';$('updated').textContent='BRAK DANYCH'}}
+async function initRadar(){if(radarMap)return;radarMap=L.map('map',{zoomControl:true}).setView([LAT,LON],7);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(radarMap);L.circleMarker([LAT,LON],{radius:6,color:'#fff',weight:2,fillColor:'#45c5ff',fillOpacity:1}).addTo(radarMap).bindPopup('Gostynin');try{const r=await fetch('https://api.rainviewer.com/public/weather-maps.json');const j=await r.json();radarFrames=(j.radar&&j.radar.past)||[];if(j.radar&&j.radar.nowcast)radarFrames=radarFrames.concat(j.radar.nowcast);if(!radarFrames.length)throw new Error('Brak klatek');$('radarRange').max=radarFrames.length-1;$('radarRange').value=radarFrames.length-1;$('radarRange').oninput=()=>setRadar(Number($('radarRange').value));setRadar(radarFrames.length-1)}catch(e){$('radarTime').textContent='Radar chwilowo niedostępny';}}
+function setRadar(i){if(!radarFrames.length)return;const f=radarFrames[i];if(radarLayer)radarMap.removeLayer(radarLayer);radarLayer=L.tileLayer('https://tilecache.rainviewer.com'+f.path+'/256/{z}/{x}/{y}/2/1_1.png',{opacity:.72,zIndex:10});radarLayer.addTo(radarMap);$('radarTime').textContent=new Date(f.time*1000).toLocaleString('pl-PL',{weekday:'short',hour:'2-digit',minute:'2-digit'});$('radarRange').value=i}
+$('playRadar').onclick=()=>{if(playing){clearInterval(playTimer);playing=false;$('playRadar').textContent='▶ Odtwarzaj';return}if(!radarFrames.length)return;playing=true;$('playRadar').textContent='Ⅱ Pauza';playTimer=setInterval(()=>{let n=(Number($('radarRange').value)+1)%radarFrames.length;setRadar(n)},650)};
+function initWind(){if(windMap)return;windMap=L.map('windmap',{zoomControl:true}).setView([LAT,LON],7);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(windMap);L.circleMarker([LAT,LON],{radius:6,color:'#fff',weight:2,fillColor:'#45c5ff',fillOpacity:1}).addTo(windMap).bindPopup('Gostynin');windCanvas=document.createElement('canvas');windCanvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:450';windMap.getContainer().appendChild(windCanvas);windCtx=windCanvas.getContext('2d');resizeWind();window.addEventListener('resize',resizeWind);for(let i=0;i<180;i++)particles.push({x:Math.random(),y:Math.random(),life:Math.random()});animateWind()}
+function resizeWind(){if(!windCanvas)return;const r=windMap.getSize();windCanvas.width=r.x*devicePixelRatio;windCanvas.height=r.y*devicePixelRatio;windCtx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0)}
+let activeDirection=240,activeSpeed=12;
+function animateWind(){if(!windCtx)return;const w=windCanvas.clientWidth,h=windCanvas.clientHeight;windCtx.fillStyle='rgba(7,17,31,.13)';windCtx.fillRect(0,0,w,h);const rad=(activeDirection+180)*Math.PI/180;const dx=Math.sin(rad),dy=-Math.cos(rad);windCtx.strokeStyle='rgba(91,224,210,.82)';windCtx.lineWidth=1.5;particles.forEach(p=>{const x=p.x*w,y=p.y*h;windCtx.beginPath();windCtx.moveTo(x,y);windCtx.lineTo(x+dx*14,y+dy*14);windCtx.stroke();p.x+=dx*(.0007+activeSpeed*.00005);p.y+=dy*(.0007+activeSpeed*.00005);if(p.x<0||p.x>1||p.y<0||p.y>1){p.x=Math.random();p.y=Math.random()}});windAnim=requestAnimationFrame(animateWind)}
+function updateWind(offset,base){if(!weather)return;const i=base+offset,h=weather.hourly;activeSpeed=h.wind_speed_10m[i]||0;activeDirection=h.wind_direction_10m[i]||0;$('wSpeed').textContent=Math.round(activeSpeed)+' km/h';$('wGust').textContent=Math.round(h.wind_gusts_10m[i]||0)+' km/h';$('wDir').textContent=direction(activeDirection);$('windTime').textContent=new Date(h.time[i]).toLocaleString('pl-PL',{weekday:'short',hour:'2-digit',minute:'2-digit'});$('windRange').value=offset}
+$('windRange').addEventListener('input',e=>{if(!weather)return;const c=weather.current.time.slice(0,13);let base=weather.hourly.time.indexOf(c);if(base<0)base=0;updateWind(Number(e.target.value),base)});
+loadWeather();setInterval(loadWeather,15*60*1000);
+</script></body></html>
+        """.trimIndent()
+    }
+}
