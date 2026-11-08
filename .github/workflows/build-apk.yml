@@ -35,3 +35,5 @@ jobs:
           name: ATMOS-APK
           path: project/app/build/outputs/apk/debug/app-debug.apk
           
+
+# Rebuild after restoring ATMOS city picker and weather startup.
