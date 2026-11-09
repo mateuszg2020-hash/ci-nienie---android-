@@ -110,3 +110,5 @@ jobs:
 # Final ATMOS release candidate: future-only radar map and redesigned weather icon.
 
 # Rebuild after weather loading null-guard fix.
+
+# Rebuild after correcting the literal newline in the radar script.
