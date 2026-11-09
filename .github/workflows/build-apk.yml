@@ -79,3 +79,5 @@ jobs:
 # Rebuild ATMOS after long-range forecast data correction.
 
 # Rebuild after weather refresh and WebView lifecycle fixes.
+
+# Rebuild with hourly rain forecast and corrected wind map explanation.
