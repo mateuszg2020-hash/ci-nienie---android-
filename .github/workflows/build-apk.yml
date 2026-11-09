@@ -36,9 +36,13 @@ jobs:
           EOF
           cat > project/app/src/main/res/drawable/atmos_icon_fg.xml <<'EOF'
           <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
-            <path android:fillColor="#FFC857" android:pathData="M72,17a19,19 0,1 0,0.1 0z"/>
-            <path android:fillColor="#FFF3D6" android:pathData="M31,79c-10,0 -18,-8 -18,-18s8,-18 18,-18c4,-13 16,-21 29,-18 10,2 17,10 19,20 10,0 18,8 18,18s-8,16 -18,16z"/>
-            <path android:fillColor="#DCEEFF" android:pathData="M31,78h48c8,0 14,-6 14,-14s-6,-14 -14,-14h-5l-1,-5c-2,-9 -10,-15 -20,-15 -11,0 -20,8 -21,19l-1,5 -5,-1c-8,0 -14,6 -14,13s6,12 14,12z"/>
+            <path android:fillColor="#FFB52E" android:pathData="M72,12a23,23 0,1 0,0.1 0z"/>
+            <path android:fillColor="#FFFFD7" android:pathData="M72,16a19,19 0,1 0,0.1 0z"/>
+            <path android:fillColor="#16466B" android:pathData="M22,76c-9,-1 -15,-8 -15,-17 0,-9 7,-16 16,-17 4,-14 16,-23 31,-21 13,1 22,10 25,22 11,0 20,9 20,20 0,8 -5,15 -12,18z"/>
+            <path android:fillColor="#F5FAFF" android:pathData="M21,72c-7,0 -12,-5 -12,-12 0,-7 6,-13 13,-13 4,-13 15,-20 27,-19 12,1 20,9 22,20 10,-1 18,6 18,16 0,5 -3,9 -7,12z"/>
+            <path android:fillColor="#B9DFFF" android:pathData="M20,75c-7,0 -12,-5 -12,-12 0,-7 6,-13 13,-13 4,-12 14,-19 26,-19 11,0 20,8 22,19 9,-1 17,6 17,15 0,6 -5,10 -11,10z"/>
+            <path android:fillColor="#50D8F2" android:pathData="M30,81c-1,0 -2,-1 -2,-2 0,-1 4,-8 5,-8 1,0 5,7 5,8 0,1 -1,2 -2,2z M49,86c-1,0 -2,-1 -2,-2 0,-1 4,-8 5,-8 1,0 5,7 5,8 0,1 -1,2 -2,2z M68,81c-1,0 -2,-1 -2,-2 0,-1 4,-8 5,-8 1,0 5,7 5,8 0,1 -1,2 -2,2z"/>
+            <path android:fillColor="#FFD166" android:pathData="M82,62l-11,15h8l-5,13 16,-19h-9l5,-9z"/>
           </vector>
           EOF
           cat > project/app/src/main/res/mipmap-anydpi/ic_launcher.xml <<'EOF'
