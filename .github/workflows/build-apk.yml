@@ -112,3 +112,5 @@ jobs:
 # Rebuild after weather loading null-guard fix.
 
 # Rebuild after correcting the literal newline in the radar script.
+
+# Rebuild with the Open-Meteo precipitation forecast map.
