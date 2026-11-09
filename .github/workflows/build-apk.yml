@@ -85,3 +85,5 @@ jobs:
 # Rebuild future-only rain forecast and correct local forecast hour alignment.
 
 # Rebuild after fixing weather refresh crash from missing windNote element.
+
+# Build diagnostic APK with visible weather API errors and a 15-second timeout.
