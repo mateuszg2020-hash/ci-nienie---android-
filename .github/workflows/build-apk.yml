@@ -87,3 +87,5 @@ jobs:
 # Rebuild after fixing weather refresh crash from missing windNote element.
 
 # Build diagnostic APK with visible weather API errors and a 15-second timeout.
+
+# Rebuild after removing obsolete radar playback event handler.
