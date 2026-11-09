@@ -69,6 +69,16 @@ jobs:
           if grep -q 'android:roundIcon=' project/app/src/main/AndroidManifest.xml; then sed -i 's#android:roundIcon="[^"]*"#android:roundIcon="@mipmap/ic_launcher_round"#' project/app/src/main/AndroidManifest.xml; else sed -i 's#<application#<application android:roundIcon="@mipmap/ic_launcher_round"#' project/app/src/main/AndroidManifest.xml; fi
           grep -n 'android:label\|android:icon\|android:roundIcon' project/app/src/main/AndroidManifest.xml
 
+      - name: Validate embedded ATMOS JavaScript
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          source = Path("app/src/main/java/pl/atmos/weather/MainActivity.kt").read_text()
+          js = source.split("<script>\\n", 1)[1].split("</script></body></html>", 1)[0]
+          Path("/tmp/atmos.js").write_text(js)
+          PY
+          node --check /tmp/atmos.js
+
       - name: Build ATMOS APK
         run: cd project && gradle assembleDebug
 
