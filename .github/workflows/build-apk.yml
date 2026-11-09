@@ -95,3 +95,5 @@ jobs:
 # Build diagnostic APK with visible weather API errors and a 15-second timeout.
 
 # Rebuild after removing obsolete radar playback event handler.
+
+# Final ATMOS release candidate: future-only radar map and redesigned weather icon.
