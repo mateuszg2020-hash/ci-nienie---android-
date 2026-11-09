@@ -98,7 +98,7 @@ main{padding:0 16px 28px}.hero{background:linear-gradient(135deg,#15334b,#10243a
 <div class="section">Mapa przepływu wiatru</div><div class="mapwrap"><div id="windmap"></div></div>
 <div class="windstats"><div class="tile"><div class="k">Wiatr</div><div class="v" id="wSpeed">--</div></div><div class="tile"><div class="k">Porywy</div><div class="v" id="wGust">--</div></div><div class="tile"><div class="k">Kierunek</div><div class="v" id="wDir">--</div></div></div>
 <div class="controls"><div class="controlrow"><strong id="windTime">Prognoza godzinowa</strong><span>Open-Meteo</span></div><input id="windRange" type="range" min="0" max="47" value="0"><div class="controlrow"><span>Teraz</span><span>+48 h</span></div></div>
-<div class="mapnote">Strzałki pokazują kierunek przepływu wiatru na całym widocznym obszarze mapy. Prędkość i porywy w kafelkach oraz suwaku dotyczą lokalizacji: '+currentCity+'.</div>
+<div class="mapnote" id="windNote">Strzałki pokazują kierunek przepływu wiatru na całym widocznym obszarze mapy. Kafelki i suwak pokazują wiatr dla wybranej lokalizacji.</div>
 </section>
 </main>
 <div class="modalback" id="cityModal"><div class="citymodal"><h2>Wybierz lokalizację</h2><p>Wpisz miasto i wybierz właściwy wynik.</p><input class="cityinput" id="cityQuery" type="search" placeholder="Np. Gostynin, Płock, Warszawa" autocomplete="off"><div class="cityresults" id="cityResults"></div><div class="cityactions"><button id="closeCity">ANULUJ</button></div></div></div>
