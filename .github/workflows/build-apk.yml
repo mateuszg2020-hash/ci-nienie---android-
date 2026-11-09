@@ -97,3 +97,5 @@ jobs:
 # Rebuild after removing obsolete radar playback event handler.
 
 # Final ATMOS release candidate: future-only radar map and redesigned weather icon.
+
+# Rebuild after weather loading null-guard fix.
