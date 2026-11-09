@@ -83,3 +83,5 @@ jobs:
 # Rebuild with hourly rain forecast and corrected wind map explanation.
 
 # Rebuild future-only rain forecast and correct local forecast hour alignment.
+
+# Rebuild after fixing weather refresh crash from missing windNote element.
