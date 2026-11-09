@@ -61,7 +61,9 @@ jobs:
             sed -i 's#<string name="app_name">[^<]*</string>#<string name="app_name">ATMOS pogoda</string>#' project/app/src/main/res/values/strings.xml
           fi
           sed -i 's#android:label="[^"]*"#android:label="ATMOS pogoda"#' project/app/src/main/AndroidManifest.xml
-          grep -n 'android:label\|android:icon' project/app/src/main/AndroidManifest.xml
+          if grep -q 'android:icon=' project/app/src/main/AndroidManifest.xml; then sed -i 's#android:icon="[^"]*"#android:icon="@mipmap/ic_launcher"#' project/app/src/main/AndroidManifest.xml; else sed -i 's#<application#<application android:icon="@mipmap/ic_launcher"#' project/app/src/main/AndroidManifest.xml; fi
+          if grep -q 'android:roundIcon=' project/app/src/main/AndroidManifest.xml; then sed -i 's#android:roundIcon="[^"]*"#android:roundIcon="@mipmap/ic_launcher_round"#' project/app/src/main/AndroidManifest.xml; else sed -i 's#<application#<application android:roundIcon="@mipmap/ic_launcher_round"#' project/app/src/main/AndroidManifest.xml; fi
+          grep -n 'android:label\|android:icon\|android:roundIcon' project/app/src/main/AndroidManifest.xml
 
       - name: Build ATMOS APK
         run: cd project && gradle assembleDebug
