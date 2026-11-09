@@ -81,3 +81,5 @@ jobs:
 # Rebuild after weather refresh and WebView lifecycle fixes.
 
 # Rebuild with hourly rain forecast and corrected wind map explanation.
+
+# Rebuild future-only rain forecast and correct local forecast hour alignment.
