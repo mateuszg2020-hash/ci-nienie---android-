@@ -20,6 +20,9 @@ class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= 30) window.setDecorFitsSystemWindows(true)
+        window.statusBarColor = Color.rgb(6, 16, 29)
+        window.navigationBarColor = Color.rgb(6, 16, 29)
         web = WebView(this)
         web.setBackgroundColor(Color.rgb(6, 16, 29))
         web.settings.javaScriptEnabled = true
