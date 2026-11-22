@@ -28,13 +28,13 @@ class AtmosWeatherWidgetProvider : AppWidgetProvider() {
                         val connection = (url.openConnection() as HttpURLConnection).apply { connectTimeout = 9000; readTimeout = 9000; requestMethod = "GET" }
                         val body = connection.inputStream.bufferedReader().use { it.readText() }; connection.disconnect()
                         val current = JSONObject(body).getJSONObject("current")
-                        temp = "${"+"current.getDouble(\"temperature_2m\").toInt()}°"
-                        wind = "${"+"current.getDouble(\"wind_speed_10m\").toInt()} km/h"
+                        temp = current.getDouble("temperature_2m").toInt().toString() + "°"
+                        wind = current.getDouble("wind_speed_10m").toInt().toString() + " km/h"
                         description = weatherText(current.optInt("weather_code", -1))
                     } catch (_: Exception) { description = "Brak połączenia • dane niedostępne" }
                     val views = RemoteViews(context.packageName, R.layout.atmos_widget)
                     views.setTextViewText(R.id.widget_city, city); views.setTextViewText(R.id.widget_temp, temp)
-                    views.setTextViewText(R.id.widget_condition, description); views.setTextViewText(R.id.widget_wind, "Wiatr $"+ "wind")
+                    views.setTextViewText(R.id.widget_condition, description); views.setTextViewText(R.id.widget_wind, "Wiatr " + wind)
                     val intent = Intent(context, MainActivity::class.java)
                     val pending = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
                     views.setOnClickPendingIntent(R.id.widget_root, pending); manager.updateAppWidget(id, views)
