@@ -6,6 +6,12 @@ import android.graphics.Color
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.webkit.JavascriptInterface
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 
 class MainActivity : Activity() {
     private lateinit var web: WebView
@@ -15,6 +21,8 @@ class MainActivity : Activity() {
         web = WebView(this)
         web.setBackgroundColor(Color.rgb(7,17,31))
         web.settings.javaScriptEnabled = true
+        createNotificationChannel()
+        web.addJavascriptInterface(AtmosBridge(), "AtmosBridge")
         web.settings.domStorageEnabled = true
         web.settings.loadWithOverviewMode = true
         web.settings.useWideViewPort = true
@@ -43,6 +51,39 @@ class MainActivity : Activity() {
     override fun onPause() {
         if (::web.isInitialized) web.onPause()
         super.onPause()
+    }
+
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel("atmos_weather", "ATMOS — alarmy pogodowe", NotificationManager.IMPORTANCE_DEFAULT)
+            getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
+        }
+    }
+
+    inner class AtmosBridge {
+        @JavascriptInterface fun requestPermission() {
+            runOnUiThread {
+                if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 501)
+                }
+            }
+        }
+        @JavascriptInterface fun notify(title: String, body: String) {
+            runOnUiThread {
+                if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) return@runOnUiThread
+                val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                val notification = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    android.app.Notification.Builder(this@MainActivity, "atmos_weather")
+                } else {
+                    @Suppress("DEPRECATION")
+                    android.app.Notification.Builder(this@MainActivity)
+                }.setSmallIcon(android.R.drawable.ic_dialog_info)
+                    .setContentTitle(title).setContentText(body).setStyle(android.app.Notification.BigTextStyle().bigText(body))
+                    .setAutoCancel(true).build()
+                manager.notify(title.hashCode(), notification)
+            }
+        }
     }
 
     override fun onBackPressed() {
