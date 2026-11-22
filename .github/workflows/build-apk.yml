@@ -92,11 +92,16 @@ jobs:
           css = Path("app/src/main/assets/styles.css").read_text()
           js = Path("app/src/main/assets/app.js").read_text()
           assert html.count("<!-- ATMOS_STYLES -->") == 1
+          assert "href=\"styles.css\"" not in html
+          assert "id=\"heroSymbol\"" in html
+          assert "id=\"heroUpdated\"" in html
           assert html.count("<!-- ATMOS_SCRIPT -->") == 1
           assert html.count("</head>") == 1 and html.count("<body>") == 1
           assert html.index("</head>") < html.index("<body>") < html.index("<header>")
           assert ":root{" not in html
           assert "function initRadar" in js and "function loadWeather" in js
+          assert "heroSymbol" in js
+          assert "ATMOS_STYLES" in html and "ATMOS_SCRIPT" in html
           assert "#map" in css and ".bottom-nav" in css
           PY
           node --check app/src/main/assets/app.js
