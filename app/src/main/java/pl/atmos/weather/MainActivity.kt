@@ -149,29 +149,6 @@ header{background:transparent}.logo{color:#f4f8fc;letter-spacing:4px}.logo span{
 .citymodal{background:#102237;color:#f4f8fc;border:1px solid #31516c}.cityinput{background:#091727;color:#f4f8fc;border:1px solid #355773}.cityresult{background:#142b40;color:#f4f8fc;border-color:#29465f}
 .mapwrap{border:1px solid #31516c;box-shadow:0 14px 36px #0005}.settings-group{margin:14px 0 20px}.settings-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 2px;border-bottom:1px solid var(--line)}.settings-row:last-child{border-bottom:0}.settings-row b{display:block;font-size:14px}.settings-row small{display:block;color:var(--muted);font-size:12px;margin-top:4px}.settings-row input[type=checkbox]{width:22px;height:22px;accent-color:#38bdf8}.settings-select{background:#142b40;color:#f4f8fc;border:1px solid #355773;border-radius:11px;padding:9px 12px}
 </style></head><body>
-:root{--bg:#eef3f7;--panel:#ffffff;--panel2:#f7fafc;--line:#d9e3ec;--text:#102235;--muted:#62778a;--blue:#1769e8;--cyan:#00a99a;--orange:#f28b38;--tile:#fff}
-html{background:#eef3f7}
-body{background:linear-gradient(180deg,#e8f0f7 0%,#f4f7fa 42%,#eaf0f5 100%);color:#102235;padding-bottom:calc(94px + env(safe-area-inset-bottom))}
-header{background:transparent}
-.logo{color:#102235;letter-spacing:3.5px}.logo span{color:#1677ed}
-.place,.eyebrow,.tile .k,.tile .s,.hour small,.mapnote,.trendnote{color:#64798d}
-.pill{background:#fff;border-color:#d5e0e9;color:#1769e8;box-shadow:0 4px 14px #18334b0d}
-.locbtn{background:#102b45;color:#fff;border:1px solid #244866;box-shadow:0 7px 18px #16334b20}
-.section{color:#12283d}
-.hero{background:radial-gradient(circle at 85% 12%,#9edbff 0,transparent 31%),linear-gradient(135deg,#123a5a 0%,#1769a7 48%,#24a6b5 100%);border:0;box-shadow:0 18px 40px #14527b28;color:#fff}
-.hero .eyebrow,.hero .feels{color:#d6edff}.hero .desc{color:#fff}
-.tile{background:#fff;border:1px solid #dce5ed;box-shadow:0 7px 22px #19344b0b;color:#102235}
-.hour{background:#fff;border:1px solid #dce5ed;box-shadow:0 4px 14px #19344b08;color:#102235}
-.controls{background:#fff;border:1px solid #d8e3ec;box-shadow:0 8px 24px #19344b0b;color:#102235}
-.btn{background:linear-gradient(135deg,#1769e8,#0d4fb7);border:0;color:#fff;box-shadow:0 7px 18px #1769e833}
-.dayrow,.weekcard{background:#fff;border:1px solid #dce5ed;box-shadow:0 5px 16px #19344b08;color:#102235}
-.weekmetrics small{color:#64798d}
-.bottom-nav{background:#ffffffed;border:1px solid #d9e3ec;box-shadow:0 12px 36px #18334b20;backdrop-filter:blur(22px)}
-.nav-item{color:#74879a}.nav-item.active{background:#e5f1ff;color:#125ecb;box-shadow:inset 0 0 0 1px #c3ddfb}.nav-item.active .nav-icon{color:#1769e8}
-.citymodal{background:#fff;color:#102235;border:1px solid #d9e3ec}.cityinput{background:#f5f8fb;color:#102235;border:1px solid #d5e0e9}.cityresult{background:#f5f8fb;color:#102235;border-color:#d9e3ec}
-.mapwrap{border:1px solid #d2dee8;box-shadow:0 12px 30px #19344b18}
-@media(prefers-reduced-motion:no-preference){.tile,.hour,.controls,.weekcard{transition:transform .18s ease,box-shadow .18s ease}.tile:active,.hour:active{transform:scale(.985)}}
-</style></head><body>
 <header><div><div class="logo">ATM<span>O</span>S</div><div class="place" id="placeName">GOSTYNIN • POGODA • RADAR • WIATR</div><button class="locbtn" id="changeCity">⌖ ZMIEŃ LOKALIZACJĘ</button></div><div class="pill" id="updated">ŁADOWANIE</div></header>
 
 <main>
