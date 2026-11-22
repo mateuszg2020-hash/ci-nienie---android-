@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>ATMOS</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<!-- ATMOS_STYLES --><link rel="preconnect" href="https://api.open-meteo.com"><link rel="preconnect" href="https://tile.openstreetmap.org"><link rel="stylesheet" href="styles.css">
+</head><body>
+<header><div><div class="logo">ATM<span>O</span>S</div><div class="place" id="placeName">GOSTYNIN • POGODA • RADAR • WIATR</div><button class="locbtn" id="changeCity">⌖ ZMIEŃ LOKALIZACJĘ</button></div><div class="pill" id="updated">ŁADOWANIE</div></header>
+
+<main>
+<section id="today" class="screen active">
+<div class="hero"><div class="eyebrow" id="city">GOSTYNIN • TERAZ</div><div class="temp" id="temp">--°</div><div class="desc" id="condition">Pobieram pogodę…</div><div class="feels" id="feels">Odczuwalna --°</div></div>
+<div class="grid">
+<div class="tile"><div class="k">Wiatr</div><div class="v" id="windval">-- km/h</div><div class="s" id="winddir">Kierunek --</div></div>
+<div class="tile"><div class="k">Porywy</div><div class="v" id="gust">-- km/h</div><div class="s">Maksymalny podmuch</div></div>
+<div class="tile"><div class="k">Opady</div><div class="v" id="rain">-- mm</div><div class="s">Godzinowo</div></div>
+<div class="tile"><div class="k">Wilgotność</div><div class="v" id="humidity">--%</div><div class="s">Względna</div></div>
+<div class="tile"><div class="k">Ciśnienie</div><div class="v" id="pressure">-- hPa</div><div class="s">Na poziomie morza</div></div>
+<div class="tile"><div class="k">Indeks UV</div><div class="v" id="uv">--</div><div class="s">Bieżąca wartość</div></div>
+</div>
+<div class="section">Najbliższe godziny</div><div class="hours" id="hours"></div><div class="section">Przebieg pogody — 24 godziny</div><div class="tile chartbox"><div class="chartlegend"><span><i style="background:#62c5ff"></i>Temperatura °C</span><span><i style="background:#51e0d0"></i>Opady mm</span></div><canvas id="weatherChart" height="210"></canvas><div class="s" id="weatherChartNote">Prognoza godzinowa Open-Meteo</div></div>\n<div class="section">Ciśnienie — ostatnie 48 godzin</div><div class="tile chartbox"><div class="chartlegend"><span><i style="background:#62c5ff"></i>Ciśnienie · hPa</span></div><canvas id="pressureChart" height="210"></canvas><div class="s" id="pressureNote">Dane godzinowe z Open-Meteo</div></div>\n<div class="section">Jakość powietrza</div><div class="grid" id="airGrid"><div class="tile"><div class="k">PM2.5</div><div class="v">—</div></div><div class="tile"><div class="k">PM10</div><div class="v">—</div></div><div class="tile"><div class="k">AQI UE</div><div class="v">—</div></div><div class="tile"><div class="k">AQI USA</div><div class="v">—</div></div></div><div class="mapnote" id="airNote">Dane modelowe Open-Meteo.</div>\n<div class="section">Ostrzeżenia IMGW</div><div class="tile" id="warningsBox"><div class="s">Pobieram oficjalne ostrzeżenia…</div></div>\n<div class="section">Słońce i Księżyc</div><div class="grid" id="sunGrid"><div class="tile"><div class="k">Wschód</div><div class="v" id="sunrise">—</div></div><div class="tile"><div class="k">Zachód</div><div class="v" id="sunset">—</div></div><div class="tile"><div class="k">Długość dnia</div><div class="v" id="dayLength">—</div></div><div class="tile"><div class="k">Faza Księżyca</div><div class="v" id="moonPhase">—</div></div></div>
+</section>
+<section id="longrange" class="screen">
+<div class="section">Prognoza na 45 dni</div>
+<div class="mapnote">Pierwsze 16 dni: prognoza dzienna. Dalszy okres: orientacyjny trend ECMWF w ujęciu tygodniowym. Im dalej, tym większa niepewność.</div>
+<div id="longStatus" class="mapnote">Pobieram prognozę długoterminową…</div>
+<div class="section">Najbliższe 16 dni</div><div id="daily45" class="longlist"></div>
+<div class="section">Dalszy trend — tygodnie 3–7</div><div id="weekly45" class="longlist"></div>
+<div class="mapnote">Dane długoterminowe są aktualizowane wraz z nowymi przebiegami modeli. Nie należy traktować ich jako dokładnej prognozy dla konkretnej godziny.</div>
+</section>
+<section id="radar" class="screen">
+<div class="section">Mapa prognozy opadów — najbliższe 12 godzin</div>
+<div class="mapwrap"><div id="map"></div></div>
+<div class="controls">
+<div class="controlrow"><strong id="radarTime">Pobieram radar…</strong><button class="btn" id="playRadar">▶ Odtwarzaj</button></div>
+<input id="radarRange" type="range" min="0" max="0" value="0">
+<div class="controlrow"><span>Teraz</span><span>+12 godzin</span></div>
+</div>
+<div class="mapnote" id="radarNote">Mapa pokazuje prognozowane opady w kolejnych godzinach na podstawie modelu Open-Meteo. To prognoza modelowa, nie pomiar radarowy.</div>
+</section>
+<section id="wind" class="screen">
+<div class="section">Mapa przepływu wiatru</div><div class="mapwrap"><div id="windmap"></div></div>
+<div class="windstats"><div class="tile"><div class="k">Wiatr</div><div class="v" id="wSpeed">--</div></div><div class="tile"><div class="k">Porywy</div><div class="v" id="wGust">--</div></div><div class="tile"><div class="k">Kierunek</div><div class="v" id="wDir">--</div></div></div>
+<div class="controls"><div class="controlrow"><strong id="windTime">Prognoza godzinowa</strong><span>Open-Meteo</span></div><input id="windRange" type="range" min="0" max="47" value="0"><div class="controlrow"><span>Teraz</span><span>+48 h</span></div></div>
+<div class="mapnote" id="windNote">Strzałki pokazują kierunek przepływu wiatru. Prognoza modelowa, nie pomiar ze stacji.</div>\n<div class="section">Warunki na wodzie — najbliższe 6 godzin</div><div class="tile"><div class="v" id="boatStatus" style="font-size:19px">Analizuję…</div><div class="s" id="boatDetails">Ocena orientacyjna na podstawie wiatru, porywów, opadów i burz. Nie zastępuje komunikatów nawigacyjnych.</div></div>
+</section>
+<section id="more" class="screen">
+<div class="section">Ustawienia</div>
+<div class="tile settings-group"><div class="k">PREFERENCJE</div>
+<div class="settings-row"><div><b>Jednostki temperatury</b><small>Wyświetlanie temperatury</small></div><select class="settings-select" id="tempUnits"><option value="C">°C</option><option value="F">°F</option></select></div>
+<div class="settings-row"><div><b>Jednostki wiatru</b><small>Prędkość wiatru i porywów</small></div><select class="settings-select" id="windUnits"><option value="kmh">km/h</option><option value="ms">m/s</option><option value="kn">węzły</option></select></div></div>
+<div class="tile settings-group"><div class="k">POWIADOMIENIA POGODOWE</div>
+<div class="settings-row"><div><b>Deszcz</b><small>Możliwy opad w ciągu 2 godzin</small></div><input type="checkbox" id="alertRain" checked></div>
+<div class="settings-row"><div><b>Silny wiatr</b><small>Porywy powyżej 50 km/h</small></div><input type="checkbox" id="alertWind" checked></div>
+<div class="settings-row"><div><b>Przymrozek</b><small>Temperatura 2°C lub niższa</small></div><input type="checkbox" id="alertFrost" checked></div>
+<button class="btn" id="enableAlerts" style="margin-top:14px">Włącz powiadomienia</button><div class="mapnote" id="alertStatus">Powiadomienia nie są jeszcze aktywne.</div></div>
+<div class="tile settings-group"><div class="k">APLIKACJA</div><div class="settings-row"><div><b>ATMOS pogoda</b><small>Wersja 1.0 • Prognozy Open-Meteo, ostrzeżenia IMGW</small></div><span style="color:var(--cyan)">●</span></div><div class="settings-row"><div><b>Informacja o danych</b><small>Prognozy są modelowe i mogą różnić się od warunków lokalnych.</small></div></div></div>
+</section>
+</main>
+<nav class="bottom-nav" aria-label="Główna nawigacja">
+<button class="nav-item active" data-screen="today"><span class="nav-icon">◉</span><span>Pogoda</span></button>
+<button class="nav-item" data-screen="longrange"><span class="nav-icon">▦</span><span>45 dni</span></button>
+<button class="nav-item" data-screen="radar"><span class="nav-icon">◌</span><span>Radar</span></button>
+<button class="nav-item" data-screen="wind"><span class="nav-icon">↝</span><span>Wiatr</span></button>
+<button class="nav-item" data-screen="more"><span class="nav-icon">☷</span><span>Więcej</span></button>
+</nav>
+<div class="modalback" id="cityModal"><div class="citymodal"><h2>Wybierz lokalizację</h2><p>Wpisz miasto i wybierz właściwy wynik.</p><input class="cityinput" id="cityQuery" type="search" placeholder="Np. Gostynin, Płock, Warszawa" autocomplete="off"><div class="cityresults" id="cityResults"></div><div class="cityactions"><button id="closeCity">ANULUJ</button></div></div></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<!-- ATMOS_SCRIPT -->
+<!-- ATMOS_SCRIPT --></body></html>
