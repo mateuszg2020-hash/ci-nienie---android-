@@ -24,7 +24,7 @@ class AtmosWeatherWidgetProvider : AppWidgetProvider() {
                 executor.execute {
                     var temp = "--°"; var wind = "-- km/h"; var description = "Otwórz ATMOS, aby odświeżyć"
                     try {
-                        val url = URL("https://api.open-meteo.com/v1/forecast?latitude=$"+"lat&longitude=$"+"lon&current=temperature_2m,wind_speed_10m,weather_code&timezone=auto")
+                        val url = URL("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&current=temperature_2m,wind_speed_10m,weather_code&timezone=auto")
                         val connection = (url.openConnection() as HttpURLConnection).apply { connectTimeout = 9000; readTimeout = 9000; requestMethod = "GET" }
                         val body = connection.inputStream.bufferedReader().use { it.readText() }; connection.disconnect()
                         val current = JSONObject(body).getJSONObject("current")
