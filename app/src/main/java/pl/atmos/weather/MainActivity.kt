@@ -10,6 +10,8 @@ import android.webkit.JavascriptInterface
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.ComponentName
+import android.appwidget.AppWidgetManager
 import android.content.pm.PackageManager
 import android.os.Build
 
@@ -70,6 +72,13 @@ class MainActivity : Activity() {
     }
 
     inner class AtmosBridge {
+        @JavascriptInterface fun saveLocation(name: String, lat: Double, lon: Double) {
+            getSharedPreferences("atmos_widget", Context.MODE_PRIVATE).edit()
+                .putString("city", name).putFloat("lat", lat.toFloat()).putFloat("lon", lon.toFloat()).apply()
+            val manager = AppWidgetManager.getInstance(this@MainActivity)
+            val ids = manager.getAppWidgetIds(ComponentName(this@MainActivity, AtmosWeatherWidgetProvider::class.java))
+            if (ids.isNotEmpty()) AtmosWeatherWidgetProvider.updateAll(this@MainActivity, manager, ids)
+        }
         @JavascriptInterface fun requestPermission() {
             runOnUiThread {
                 if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
