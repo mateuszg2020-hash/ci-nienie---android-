@@ -24,8 +24,11 @@ jobs:
       - name: Unpack ATMOS project
         run: unzip -o ATMOS_Android_Project.zip -d project
 
-      - name: Apply ATMOS premium app source
-        run: cp app/src/main/java/pl/atmos/weather/MainActivity.kt project/app/src/main/java/pl/atmos/weather/MainActivity.kt
+      - name: Apply ATMOS app source and web assets
+        run: |
+          cp app/src/main/java/pl/atmos/weather/MainActivity.kt project/app/src/main/java/pl/atmos/weather/MainActivity.kt
+          mkdir -p project/app/src/main/assets
+          cp -R app/src/main/assets/. project/app/src/main/assets/
 
 
       - name: Set ATMOS Pogoda branding and weather icon
@@ -81,22 +84,22 @@ jobs:
           p.write_text(s)
           PY
 
-      - name: Validate embedded ATMOS JavaScript
+      - name: Validate modular ATMOS HTML, CSS and JavaScript
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          source = Path("app/src/main/java/pl/atmos/weather/MainActivity.kt").read_text()
-          html = source.split('private val PAGE = """', 1)[1]
-          js = html.split("<script>", 1)[1].split("</script>", 1)[0]
-          Path("/tmp/atmos.js").write_text(js)
-          if html.count("</head>") != 1 or html.count("<body>") != 1:
-              raise SystemExit("Invalid HTML document structure")
-          if not (html.index("</style>") < html.index("</head>") < html.index("<body>") < html.index("<header>")):
-              raise SystemExit("Stylesheet/head/body order is broken")
-          if html.find(":root{", html.index("<body>")) != -1:
-              raise SystemExit("CSS source leaked into visible page body")
+          html = Path("app/src/main/assets/index.html").read_text()
+          css = Path("app/src/main/assets/styles.css").read_text()
+          js = Path("app/src/main/assets/app.js").read_text()
+          assert html.count("<!-- ATMOS_STYLES -->") == 1
+          assert html.count("<!-- ATMOS_SCRIPT -->") == 1
+          assert html.count("</head>") == 1 and html.count("<body>") == 1
+          assert html.index("</head>") < html.index("<body>") < html.index("<header>")
+          assert ":root{" not in html
+          assert "function initRadar" in js and "function loadWeather" in js
+          assert "#map" in css and ".bottom-nav" in css
           PY
-          node --check /tmp/atmos.js
+          node --check app/src/main/assets/app.js
 
       - name: Build ATMOS APK
         run: cd project && gradle assembleDebug
