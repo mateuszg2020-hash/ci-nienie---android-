@@ -130,3 +130,5 @@ jobs:
 # Build ATMOS feature expansion: alerts, IMGW, air quality, pressure, sun and boating.
 
 # Rebuild with district-filtered IMGW warning data.
+
+# Rebuild after moving non-settings tools into their relevant weather sections and fixing map tiles.
