@@ -69,6 +69,18 @@ jobs:
           if grep -q 'android:roundIcon=' project/app/src/main/AndroidManifest.xml; then sed -i 's#android:roundIcon="[^"]*"#android:roundIcon="@mipmap/ic_launcher_round"#' project/app/src/main/AndroidManifest.xml; else sed -i 's#<application#<application android:roundIcon="@mipmap/ic_launcher_round"#' project/app/src/main/AndroidManifest.xml; fi
           grep -n 'android:label\|android:icon\|android:roundIcon' project/app/src/main/AndroidManifest.xml
 
+      - name: Enable Android weather notifications
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path("project/app/src/main/AndroidManifest.xml")
+          s=p.read_text()
+          permission='    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />\\n'
+          if 'android.permission.POST_NOTIFICATIONS' not in s:
+              s=s.replace('<application', permission+'    <application', 1)
+          p.write_text(s)
+          PY
+
       - name: Validate embedded ATMOS JavaScript
         run: |
           python3 - <<'PY'
@@ -114,3 +126,5 @@ jobs:
 # Rebuild after correcting the literal newline in the radar script.
 
 # Rebuild with the Open-Meteo precipitation forecast map.
+
+# Build ATMOS feature expansion: alerts, IMGW, air quality, pressure, sun and boating.
