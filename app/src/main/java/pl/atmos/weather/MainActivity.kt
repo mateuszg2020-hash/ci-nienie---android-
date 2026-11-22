@@ -102,6 +102,39 @@ class MainActivity : Activity() {
 header{padding:20px 20px 12px;display:flex;align-items:center;justify-content:space-between} .logo{font-size:25px;font-weight:850;letter-spacing:3px}.logo span{color:var(--blue)}.place{font-size:13px;color:var(--muted);margin-top:3px}.pill{border:1px solid var(--line);border-radius:20px;padding:8px 12px;color:var(--blue);font-size:12px} .locbtn{border:1px solid #315675;background:#142b40;color:#dff3ff;border-radius:12px;padding:9px 12px;font-size:12px;margin-top:9px}
 
 main{padding:0 16px 34px;max-width:760px;margin:0 auto}header{max-width:760px;margin:0 auto;padding:24px 20px 18px}.section{font-size:18px;letter-spacing:-.2px;margin:26px 2px 12px}.tile{box-shadow:0 8px 24px #00000012}.hero{padding:24px;min-height:210px}.grid{gap:11px}.mapwrap{height:420px;min-height:320px}.chartbox{padding:12px 12px 8px}.chartbox canvas{display:block;width:100%;height:210px}.chartlegend{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:12px;margin:4px 4px 8px}.chartlegend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}.hero{background:linear-gradient(135deg,#15334b,#10243a 65%,#12283b);border:1px solid #244763;border-radius:24px;padding:20px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-55px;top:-65px;background:#4ebdff12}.eyebrow{color:#9ab4ca;font-size:12px;letter-spacing:1.4px;text-transform:uppercase}.temp{font-size:68px;font-weight:300;letter-spacing:-4px;margin:8px 0 0}.desc{font-size:16px;color:#d3e4f2}.feels{font-size:13px;color:#9eb5c9;margin-top:7px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.tile{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;min-height:88px}.tile .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}.tile .v{font-size:22px;font-weight:650;margin-top:8px}.tile .s{font-size:11px;color:var(--muted);margin-top:3px}.section{font-size:16px;font-weight:750;margin:22px 2px 10px}.hours{display:flex;gap:9px;overflow:auto;padding-bottom:5px}.hour{min-width:70px;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:12px 8px;text-align:center}.hour b{display:block;font-size:17px;margin:7px 0}.hour small{color:var(--muted)}.screen{display:block;margin:0 0 26px}.mapwrap{height:55vh;min-height:350px;border-radius:20px;overflow:hidden;border:1px solid var(--line);position:relative}#map,#windmap{height:100%;width:100%;background:#0b1827}.mapnote{font-size:12px;color:var(--muted);line-height:1.5;margin:10px 3px}.controls{background:var(--panel);border:1px solid var(--line);padding:14px;border-radius:17px;margin-top:11px}.controlrow{display:flex;align-items:center;justify-content:space-between;gap:10px}.controlrow strong{font-size:14px}.controlrow span{font-size:12px;color:var(--blue)}input[type=range]{width:100%;accent-color:#5cc5ff;margin:14px 0 5px}.btn{border:1px solid #2b5b7b;background:#15364e;color:#eaf7ff;border-radius:12px;padding:10px 14px;font-weight:650}.windstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.windstats .tile{padding:12px;min-height:70px}.windstats .v{font-size:18px}.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin:10px 4px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;background:#56d8ca}.error{color:#ffc078;font-size:12px;margin-top:8px}.longlist{display:grid;gap:9px}.dayrow{display:grid;grid-template-columns:34px 1.15fr .8fr 1fr;gap:8px;align-items:center;padding:13px;background:var(--tile);border:1px solid var(--line);border-radius:14px}.dayicon{font-size:25px;text-align:center}.dayrow .date{font-size:13px;color:var(--muted)}.dayrow .temps{font-size:17px;font-weight:700}.dayrow .detail{font-size:12px;color:var(--muted);text-align:right}.weekcard{padding:16px;background:linear-gradient(135deg,#142e46,#102033);border:1px solid var(--line);border-radius:16px}.weekhead{font-weight:700;margin-bottom:10px}.weekmetrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.weekmetrics b{display:block;font-size:18px;margin-top:4px}.weekmetrics small{color:var(--muted);font-size:11px}.trendnote{color:var(--muted);font-size:12px;margin-top:10px}.modalback{display:none;position:fixed;inset:0;background:#020814dd;z-index:2000;align-items:center;justify-content:center;padding:22px}.modalback.open{display:flex}.citymodal{width:100%;max-width:440px;background:#102237;border:1px solid #31516d;border-radius:22px;padding:20px;box-shadow:0 24px 80px #0009}.citymodal h2{margin:0 0 7px;font-size:21px}.citymodal p{margin:0 0 16px;color:var(--muted);font-size:13px}.cityinput{width:100%;padding:14px 15px;border-radius:13px;border:1px solid #355773;background:#091727;color:#fff;font-size:16px;outline:none}.cityinput:focus{border-color:var(--blue)}.cityresults{max-height:260px;overflow:auto;margin-top:10px}.cityresult{width:100%;text-align:left;padding:13px;margin-top:7px;border:1px solid #29445e;border-radius:12px;background:#142b40;color:#f1f6fc;font-size:14px}.cityactions{display:flex;justify-content:flex-end;margin-top:14px}.cityactions button{border:0;background:transparent;color:var(--blue);padding:10px 14px;font-weight:700}
+
+/* ATMOS premium interface */
+:root{--bg:#071321;--panel:#101f30;--panel2:#162b40;--line:#263f57;--text:#f4f8fc;--muted:#9bb0c3;--blue:#65c8ff;--cyan:#53dfcf;--orange:#ffbd72}
+body{background:radial-gradient(ellipse at 80% -12%,#183b56 0,transparent 36%),var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:calc(88px + env(safe-area-inset-bottom))}
+header{padding:24px 20px 18px;align-items:flex-start}
+.logo{font-size:30px;letter-spacing:4px;line-height:1.05}.place{font-size:12px;letter-spacing:1.3px;margin-top:9px}
+.pill{border:1px solid #31516c;background:#0d1c2b;border-radius:999px;padding:9px 13px;font-size:11px;white-space:nowrap}
+.locbtn{border:1px solid #315a78;background:linear-gradient(135deg,#183b55,#10283d);border-radius:999px;padding:10px 15px;font-size:12px}
+main{padding:0 17px 30px;max-width:760px}
+.screen{display:none;margin:0 0 18px}.screen.active{display:block;animation:screenIn .22s ease-out}
+@keyframes screenIn{from{opacity:.5;transform:translateY(5px)}to{opacity:1;transform:none}}
+.section{font-size:18px;font-weight:760;letter-spacing:-.45px;margin:24px 2px 13px}
+.hero{min-height:230px;border-radius:28px;padding:24px;background:linear-gradient(145deg,#1a405b 0%,#122d45 54%,#102237 100%);border:1px solid #315672;box-shadow:0 18px 45px #0003}
+.hero:after{width:220px;height:220px;right:-70px;top:-90px;background:radial-gradient(circle,#66c9ff24,transparent 68%)}
+.eyebrow{font-size:11px;letter-spacing:1.8px}.temp{font-size:76px;line-height:1.12;font-weight:300;margin:13px 0 8px;letter-spacing:-5px}
+.desc{font-size:17px;font-weight:550}.feels{font-size:13px;margin-top:10px}
+.grid{gap:10px;margin-top:12px}.tile{border-radius:20px;padding:16px;background:linear-gradient(145deg,#14283c,#101f30);border:1px solid #29435b;box-shadow:0 7px 20px #00000012;min-height:100px}
+.tile .k{font-size:10px;letter-spacing:1.15px}.tile .v{font-size:24px;font-weight:680;letter-spacing:-.5px;margin-top:10px}.tile .s{font-size:11px;line-height:1.45;margin-top:5px}
+.hours{gap:9px;padding:2px 1px 9px}.hour{min-width:78px;border-radius:17px;background:#112337;border:1px solid #29435b;padding:13px 9px}.hour b{font-size:18px}.hour small{font-size:11px}
+.chartbox{padding:15px 12px 10px}.chartbox canvas{height:220px}.chartlegend{font-size:11px}
+.mapwrap{height:52vh;min-height:340px;border-radius:23px;border:1px solid #34516a;box-shadow:0 12px 28px #0003}
+.controls{border-radius:20px;padding:16px;background:linear-gradient(145deg,#142b40,#0f2032);border:1px solid #2b465e}
+.btn{border-radius:14px;padding:11px 16px;background:linear-gradient(135deg,#1b4966,#15354d);border:1px solid #39708f}
+.dayrow{border-radius:17px;padding:14px 12px;background:linear-gradient(120deg,#14283b,#101f30);grid-template-columns:34px 1.15fr .8fr 1fr}
+.weekcard{border-radius:19px;padding:17px;background:linear-gradient(140deg,#18334b,#102033);border:1px solid #2b4963}
+.mapnote{font-size:12px;line-height:1.6}
+.bottom-nav{position:fixed;z-index:1500;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));max-width:700px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;padding:8px 7px;background:#0d1c2beF;border:1px solid #29445c;border-radius:24px;box-shadow:0 14px 40px #0008;backdrop-filter:blur(18px)}
+.nav-item{border:0;background:transparent;color:#8fa7bc;border-radius:17px;min-width:0;padding:7px 2px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font:600 10px system-ui;letter-spacing:.1px}
+.nav-icon{font-size:21px;line-height:22px;font-weight:500}
+.nav-item.active{color:#eaf8ff;background:linear-gradient(145deg,#1d4b68,#16354d);box-shadow:inset 0 0 0 1px #39708e}
+.nav-item.active .nav-icon{color:#74d2ff}
+.citymodal{border-radius:25px;box-shadow:0 28px 90px #000b}
+@media(min-width:600px){.bottom-nav{bottom:18px}.hero{padding:30px}.grid{gap:13px}.tile{padding:19px}}
 </style></head><body>
 <header><div><div class="logo">ATM<span>O</span>S</div><div class="place" id="placeName">GOSTYNIN • POGODA • RADAR • WIATR</div><button class="locbtn" id="changeCity">⌖ ZMIEŃ LOKALIZACJĘ</button></div><div class="pill" id="updated">ŁADOWANIE</div></header>
 
@@ -157,11 +190,30 @@ main{padding:0 16px 34px;max-width:760px;margin:0 auto}header{max-width:760px;ma
 
 </section>
 </main>
+<nav class="bottom-nav" aria-label="Główna nawigacja">
+<button class="nav-item active" data-screen="today"><span class="nav-icon">◉</span><span>Pogoda</span></button>
+<button class="nav-item" data-screen="longrange"><span class="nav-icon">▦</span><span>45 dni</span></button>
+<button class="nav-item" data-screen="radar"><span class="nav-icon">◌</span><span>Radar</span></button>
+<button class="nav-item" data-screen="wind"><span class="nav-icon">↝</span><span>Wiatr</span></button>
+<button class="nav-item" data-screen="more"><span class="nav-icon">☷</span><span>Więcej</span></button>
+</nav>
 <div class="modalback" id="cityModal"><div class="citymodal"><h2>Wybierz lokalizację</h2><p>Wpisz miasto i wybierz właściwy wynik.</p><input class="cityinput" id="cityQuery" type="search" placeholder="Np. Gostynin, Płock, Warszawa" autocomplete="off"><div class="cityresults" id="cityResults"></div><div class="cityactions"><button id="closeCity">ANULUJ</button></div></div></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 let LAT=52.4297,LON=19.4619,currentCity="Gostynin";let weather=null,precipGrid=[],precipLayers=[],radarMap=null,radarMarker=null,windMap=null,windMarker=null,playing=false,playTimer=null,particles=[],windCanvas=null,windCtx=null,windAnim=null;
 const $=id=>document.getElementById(id);
+function switchScreen(id){
+ document.querySelectorAll('.screen').forEach(el=>el.classList.toggle('active',el.id===id));
+ document.querySelectorAll('.nav-item').forEach(el=>el.classList.toggle('active',el.dataset.screen===id));
+ window.scrollTo({top:0,behavior:'smooth'});
+ if(id==='longrange')loadLongRange();
+ if(id==='radar')setTimeout(()=>{initRadar();if(radarMap)radarMap.invalidateSize()},100);
+ if(id==='wind')setTimeout(()=>{initWind();if(windMap){windMap.invalidateSize();resizeWind()}},100);
+ if(id==='more')setTimeout(()=>{loadMoreFeatures();drawPressureFromForecast()},100);
+ if(id==='today')setTimeout(()=>{drawWeatherChart()},100);
+}
+document.querySelectorAll('.nav-item').forEach(el=>el.addEventListener('click',()=>switchScreen(el.dataset.screen)));
+
 window.onerror=function(message,source,line,col,error){const detail='BŁĄD APLIKACJI: '+String(message)+' (linia '+line+')';const status=$('updated');if(status)status.textContent='BŁĄD JS';const condition=$('condition');if(condition)condition.textContent=detail;return false;};
 window.onunhandledrejection=function(event){const detail='BŁĄD DANYCH: '+String(event.reason&&event.reason.message||event.reason);if($('condition'))$('condition').textContent=detail;if($('updated'))$('updated').textContent='BŁĄD DANYCH';};
 let citySearchTimer=null;
