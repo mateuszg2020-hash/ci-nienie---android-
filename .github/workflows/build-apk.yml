@@ -128,3 +128,5 @@ jobs:
 # Rebuild with the Open-Meteo precipitation forecast map.
 
 # Build ATMOS feature expansion: alerts, IMGW, air quality, pressure, sun and boating.
+
+# Rebuild with district-filtered IMGW warning data.
