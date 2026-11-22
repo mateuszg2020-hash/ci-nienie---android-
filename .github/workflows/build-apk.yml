@@ -106,6 +106,35 @@ jobs:
           PY
           node --check app/src/main/assets/app.js
 
+      - name: Add ATMOS Android weather widget
+        run: |
+          mkdir -p project/app/src/main/java/pl/atmos/weather project/app/src/main/res/layout project/app/src/main/res/xml
+          cp app/src/main/java/pl/atmos/weather/AtmosWeatherWidgetProvider.kt project/app/src/main/java/pl/atmos/weather/AtmosWeatherWidgetProvider.kt
+          cat > project/app/src/main/res/layout/atmos_widget.xml <<'EOF'
+          <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:padding="16dp" android:background="#10283B">
+            <TextView android:id="@+id/widget_city" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="GOSTYNIN" android:textColor="#8FAABD" android:textSize="12sp" android:textStyle="bold"/>
+            <TextView android:id="@+id/widget_temp" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="--°" android:textColor="#F3F8FC" android:textSize="38sp" android:textStyle="bold"/>
+            <TextView android:id="@+id/widget_condition" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Pobieram pogodę…" android:textColor="#DDEBF5" android:textSize="13sp"/>
+            <TextView android:id="@+id/widget_wind" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Wiatr -- km/h" android:textColor="#51DCCB" android:textSize="12sp"/>
+          </LinearLayout>
+          EOF
+          cat > project/app/src/main/res/xml/atmos_widget_info.xml <<'EOF'
+          <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android" android:minWidth="180dp" android:minHeight="110dp" android:updatePeriodMillis="1800000" android:initialLayout="@layout/atmos_widget" android:resizeMode="horizontal|vertical" android:widgetCategory="home_screen" />
+          EOF
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path("project/app/src/main/AndroidManifest.xml")
+          s=p.read_text()
+          receiver='''        <receiver android:name=".AtmosWeatherWidgetProvider" android:exported="false">
+                    <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+                    <meta-data android:name="android.appwidget.provider" android:resource="@xml/atmos_widget_info" />
+                </receiver>
+          '''
+          if 'AtmosWeatherWidgetProvider' not in s:
+              s=s.replace('</application>', receiver+'    </application>')
+          p.write_text(s)
+          PY
+
       - name: Build ATMOS APK
         run: cd project && gradle assembleDebug
 
